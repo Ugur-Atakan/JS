@@ -1,0 +1,34 @@
+[
+    {
+            "title" : "Anasayfa ",
+            "url" : "/",
+            "key" : "anasayfa"
+        },
+        {
+            "title" : "Blog",
+            "url" : "/blog",
+            "key" : "blog",
+            "subMenus": [
+                {
+                    "title" : "Blog 1",
+                "url": "/blog/1",
+                    "key" : "blog-1"
+                },
+
+                {
+                    "title" : "Blog 2",
+                    "url" : "/blog/2",
+                    "key" : "blog-2"
+                }]
+        },
+        {
+            "title" : "Çalışmalarımız ",
+            "url" : "/caismalarimiz",
+            "key" : "calısmalarımız"
+        },
+        {
+            "title" : "Hakkımızda ",
+            "url" : "/hakkimizda",
+            "key" : "hakkimizda"
+        }
+        ]
