@@ -2,32 +2,42 @@ const express = require('express');
 var cors = require('cors');
 const app = express()
 const port = 3001;
-const mysql = require('mysql');
+const con = require('./Connection');
 
 app.use(cors());
+app.use(express.json());
 
 const muayene_hasta="SELECT * FROM Hastalar inner join Muayeneler on  Muayeneler.hastaId=Hastalar.id;";
 const hasta_hastane="SELECT * FROM Hastalar inner join Hastaneler on  Hastaneler.id=Hastalar.hastaneId;";
 const recete_muayene="SELECT * FROM Receteler inner join Muayeneler on  Muayeneler.id=Receteler.muayeneid;";
-const hastalar="SELECT * FROM Hastalar;";
-const hastaneler="SELECT * FROM Hastaneler;";
-const muayeneler="SELECT * FROM Muayeneler;";
-const receteler="SELECT * FROM Receteler;";
+const hastalar="SELECT * FROM Hastalar";
+const hastaneler="SELECT * FROM Hastaneler";
+const muayeneler="SELECT * FROM Muayeneler";
+const receteler="SELECT * FROM Receteler";
+const sorgu2="SELECT * FROM Receteler inner join Muayeneler on  Muayeneler.id=Receteler.muayeneid inner join Hastalar on Hastalar.id=Muayeneler.hastaId inner join Hastaneler on Hastalar.hastaneid=Hastaneler.id;";
 
 
-
-const connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : '205630',
-  database : 'hastane'
-});
-
-connection.connect((err) => {
+con.connect((err) => {
   if (err) throw err;
   console.log('Connected to MySQL!');
 });
 
+app.post('/query', (req, res) => {
+  const sqldata=req.body.sqlquery;
+  // bodyde JSON olarak gidecek {"sqlquery":"SELECT * FROM Hastalar"}
+   con.query(sqldata, (error, results, fields) => {
+     if (error) throw error;
+     res.send(results);
+   });
+});
+
+
+app.get('/sqlsorgu/:q', (req, res) => {
+  connection.query(req.params.q, (error, results, fields) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
 app.get('/hastalarvehastaneler', (req, res) => {
     connection.query(hasta_hastane, (error, results, fields) => {
       if (error) throw error;
@@ -42,20 +52,6 @@ app.get('/hastalarvehastaneler', (req, res) => {
     });
   });
 
-  app.get('/sqlsorgu/:q', (req, res) => {
-    connection.query(req.params.q, (error, results, fields) => {
-      if (error) throw error;
-      res.send(results);
-    });
-  });
-
-  app.post('/query', (req, res) => {
-    const { sorgu } = req.body;
-    connection.query(sorgu, (error, results, fields) => {
-      if (error) throw error;
-      res.send(results);
-    });
-  });
 
   app.get('/recetevemuayene', (req, res) => {
     connection.query(recete_muayene, (error, results, fields) => {
@@ -65,7 +61,7 @@ app.get('/hastalarvehastaneler', (req, res) => {
   });
 
   app.get('/hastalar', (req, res) => {
-    connection.query(hastalar, (error, results, fields) => {
+    connection.query(sorgu2, (error, results, fields) => {
       if (error) throw error;
       res.send(results);
     });
@@ -76,6 +72,7 @@ app.get('/hastalarvehastaneler', (req, res) => {
       if (error) throw error;
       res.send(results);
     });
+
   });
   app.get('/muayeneler', (req, res) => {
     connection.query(muayeneler, (error, results, fields) => {
@@ -92,4 +89,4 @@ app.get('/hastalarvehastaneler', (req, res) => {
 
 app.listen(port, () => {
   console.log(`${port} portu aktif!`)
-})
+});
