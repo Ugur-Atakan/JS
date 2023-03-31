@@ -1,7 +1,7 @@
 // Description: using cards.json file to create cards
 const page= document.getElementById('Page');
 
-fetch("https://fakestoreapi.com/products")
+fetch("http://localhost:3001/hastalarvehastaneler")
     .then(res => res.json())
     .then(data => {
         data.map(function (value, i) {
