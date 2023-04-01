@@ -6,8 +6,8 @@ fetch("http://localhost:3001/hastalar")
     .then(data => {
         data.map(function (value, i) {
 
-const satir=`<tr>
-<td>${value.id}</th>
+const satir=`<tr id=${value.id}>
+<td>${value.id}</input></td>
 <td>${value.name}</td>
 <td>${value.surname}</td>
 <td>${value.birthPlace}</td>

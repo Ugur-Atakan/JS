@@ -14,7 +14,8 @@ const hastalar="SELECT * FROM Hastalar";
 const hastaneler="SELECT * FROM Hastaneler";
 const muayeneler="SELECT * FROM Muayeneler";
 const receteler="SELECT * FROM Receteler";
-const sorgu2="SELECT * FROM Receteler inner join Muayeneler on  Muayeneler.id=Receteler.muayeneid inner join Hastalar on Hastalar.id=Muayeneler.hastaId inner join Hastaneler on Hastalar.hastaneid=Hastaneler.id;";
+const sorgu2="SELECT * FROM Receteler inner join Muayeneler on  Muayeneler.muayeneid=Receteler.muayeneid inner join Hastalar on Hastalar.id=Muayeneler.hastaid inner join Hastaneler on Hastaneler.hastaneid=Hastalar.hastaneid;";
+const karma="SELECT hastanename, type, description, code FROM Receteler inner join Muayeneler on  Muayeneler.muayeneid=Receteler.muayeneid inner join Hastalar on Hastalar.id=Muayeneler.hastaid inner join Hastaneler on Hastaneler.hastaneid=Hastalar.hastaneid where Hastalar.id=1;";
 
 
 con.connect((err) => {
@@ -22,6 +23,8 @@ con.connect((err) => {
   console.log('Connected to MySQL!');
 });
 
+
+// DİKKAT BU SQL AÇIĞINA NEDEN OLAN BİR KODDURÇ. KULLANMAYIN
 app.post('/query', (req, res) => {
   const sqldata=req.body.sqlquery;
   // bodyde JSON olarak gidecek {"sqlquery":"SELECT * FROM Hastalar"}
@@ -31,22 +34,23 @@ app.post('/query', (req, res) => {
    });
 });
 
-
+// DİKKAT BU SQL AÇIĞINA NEDEN OLAN BİR KODDURÇ. KULLANMAYIN
 app.get('/sqlsorgu/:q', (req, res) => {
-  connection.query(req.params.q, (error, results, fields) => {
+  con.query(req.params.q, (error, results, fields) => {
     if (error) throw error;
     res.send(results);
   });
 });
+
 app.get('/hastalarvehastaneler', (req, res) => {
-    connection.query(hasta_hastane, (error, results, fields) => {
+    con.query(hasta_hastane, (error, results, fields) => {
       if (error) throw error;
       res.send(results);
     });
   });
   
   app.get('/hastalarmuayeneler', (req, res) => {
-    connection.query(muayene_hasta, (error, results, fields) => {
+    con.query(muayene_hasta, (error, results, fields) => {
       if (error) throw error;
       res.send(results);
     });
@@ -54,34 +58,41 @@ app.get('/hastalarvehastaneler', (req, res) => {
 
 
   app.get('/recetevemuayene', (req, res) => {
-    connection.query(recete_muayene, (error, results, fields) => {
+    con.query(recete_muayene, (error, results, fields) => {
       if (error) throw error;
       res.send(results);
     });
   });
 
   app.get('/hastalar', (req, res) => {
-    connection.query(sorgu2, (error, results, fields) => {
+    con.query(hastalar, (error, results, fields) => {
       if (error) throw error;
       res.send(results);
     });
   });
 
   app.get('/hastaneler', (req, res) => {
-    connection.query(hastaneler, (error, results, fields) => {
+    con.query(hastaneler, (error, results, fields) => {
       if (error) throw error;
       res.send(results);
     });
 
   });
   app.get('/muayeneler', (req, res) => {
-    connection.query(muayeneler, (error, results, fields) => {
+    con.query(muayeneler, (error, results, fields) => {
       if (error) throw error;
       res.send(results);
     });
   });
   app.get('/receteler', (req, res) => {
-    connection.query(receteler, (error, results, fields) => {
+    con.query(receteler, (error, results, fields) => {
+      if (error) throw error;
+      res.send(results);
+    });
+  });
+
+  app.get('/ozelsorgu/:id', (req, res) => {
+    con.query(`SELECT hastanename, type, description, code FROM Receteler inner join Muayeneler on  Muayeneler.muayeneid=Receteler.muayeneid inner join Hastalar on Hastalar.id=Muayeneler.hastaid inner join Hastaneler on Hastaneler.hastaneid=Hastalar.hastaneid where Hastalar.id=${req.params.id}`, (error, results, fields) => {
       if (error) throw error;
       res.send(results);
     });
