@@ -4,7 +4,7 @@
  Source Server         : Atakan
  Source Server Type    : MySQL
  Source Server Version : 80030 (8.0.30)
- Source Host           : atakan-do-user-13871595-0.b.db.ondigitalocean.com:25060
+ Source Host           : localhost
  Source Schema         : defaultdb
 
  Target Server Type    : MySQL
