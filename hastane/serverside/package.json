@@ -1,0 +1,20 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Hastane Yönetim Sistemi Server App",
+  "main": "Connection.js",
+  "scripts": {
+    "test": "start server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ugur-Atakan/JS.git#main"
+  },
+  "author": "Uğur Atakan SÜRMELİ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ugur-Atakan/JS/issues"
+  },
+  "homepage": "https://github.com/Ugur-Atakan/JS/tree/main#readme"
+}
