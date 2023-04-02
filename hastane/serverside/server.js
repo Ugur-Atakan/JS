@@ -35,6 +35,18 @@ con.connect((err) => {
     });
   });
 
+  app.post('/hastaekle', (req, res) => {
+    const hastaTc = req.body.hastaTc;
+    const hastaAdi = req.body.hastaAdi;
+    const hastaSoyadi = req.body.hastaSoyadi;
+    const dogumYeri = req.body.dogumYeri;
+    const dogumYili = req.body.dogumYili;
+     con.query(`INSERT INTO Hastalar (TCNo,Adi,Soyadi,DY,DT) VALUES (${hastaTc},'${hastaAdi}','${hastaSoyadi}','${dogumYeri}','${dogumYili}')`, (error, results, fields) => {
+       if (error) throw error;
+       res.send("Kayıt Başarılı");
+     });
+  });
+  
 
   app.get('/hastalar', (req, res) => {
     con.query(hastalar, (error, results, fields) => {
