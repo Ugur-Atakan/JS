@@ -2,7 +2,7 @@
 AUTHOR:UĞUR ATAKAN SÜRMELİ
 DATE: 01.04.2023
 */
-const serverAdress="http://134.122.85.16:3001";
+const serverAdress="http://localhost:3001";
 const hastalar = document.getElementById("hastalar");
 const muayeneler = document.getElementById("muayeneler");
 const ilaclar = document.getElementById("ilaclartable");
