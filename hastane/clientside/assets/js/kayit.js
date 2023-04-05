@@ -35,5 +35,6 @@ fetch(`${serverAdress}/hastaekle`, {
 })
    .then(response => response.json())
    .then(response => console.log(JSON.stringify(response)))
+   console.log(sqlquery);
    valuetemizle();
 }
