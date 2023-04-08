@@ -116,6 +116,7 @@ app.get('/receteler', (req, res) => {
 app.post('/query', (req, res) => {
   const token = req.body.token;
   const sqldata = req.body.sqlquery;
+  
   if (req.body) {
     if (req.body.token === token) {
       con.query(sqldata, (error, results, fields) => {
